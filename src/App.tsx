@@ -13,7 +13,6 @@ function App() {
     return (
         <div className="App">
             <Header />
-            <span>{JSON.stringify(tg)}</span>
             <button onClick={onToggleButton}>Toggle</button>
         </div>
     );
