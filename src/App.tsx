@@ -4,7 +4,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
-    const {tg, onToggleButton} = useTelegram();
+    const {tg, } = useTelegram();
 
     useEffect(() => {
         tg.ready();
