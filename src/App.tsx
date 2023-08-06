@@ -14,7 +14,7 @@ function App() {
         <div className="App">
             {/*<Header />*/}
             {/*<button onClick={onToggleButton}>Toggle</button>*/}
-            <Dropdown>
+            <Dropdown className={'border-0'}>
                 <Dropdown.Toggle>Предмет</Dropdown.Toggle>
                 <Dropdown.Menu>
                     <Dropdown.Item href={"#"}>test</Dropdown.Item>
