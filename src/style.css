@@ -1,4 +1,4 @@
-.dropdown {
-    background-color: black !important;
-    color: var(--tg-theme-button-text-color) !important;
+body {
+    background-color: var(--tg-theme-bg-color);
+    color: var(--tg-theme-text-color);
 }
