@@ -41,10 +41,10 @@ function App() {
         console.log("test");
         if (images && date && title && subject) {
             console.log("true");
-            tg.MainButton.show();
+            tg?.MainButton?.show();
         } else {
             console.log("false");
-            tg.MainButton.hide();
+            tg?.MainButton?.hide();
         }
     }, [subject, date, title, images])
 
