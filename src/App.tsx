@@ -10,6 +10,16 @@ function App() {
     const [title, setTitle] = useState<string>(null!);
     const [images, setImages] = useState<FileList | null>(null);
 
+    const onSendData = useCallback(() => {
+        const data = {
+            subject,
+            date,
+            title,
+            images
+        }
+        tg.sendData(JSON.stringify(data));
+    }, [date, images, subject, tg, title]);
+
     useEffect(() => {
         tg.ready();
     }, [tg])
@@ -27,16 +37,6 @@ function App() {
         else
             onToggleButton();
     }, [subject, date, title, images, onToggleButton])
-
-    const onSendData = useCallback(() => {
-        const data = {
-            subject,
-            date,
-            title,
-            images
-        }
-        tg.sendData(JSON.stringify(data));
-    }, [date, images, subject, tg, title]);
 
     const handleSelectSubject = (e: SyntheticEvent<HTMLSelectElement>) => {
         e.preventDefault();
