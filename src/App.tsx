@@ -46,7 +46,7 @@ function App() {
             console.log("false");
             tg?.MainButton?.hide();
         }
-    }, [subject, date, title, images])
+    }, [subject, date, title, images, tg?.MainButton])
 
     const handleSelectSubject = (e: SyntheticEvent<HTMLSelectElement>) => {
         e.preventDefault();
