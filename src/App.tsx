@@ -27,7 +27,7 @@ function App() {
     useEffect(() => {
         tg.ready();
         onToggleButton();
-    }, [tg])
+    }, [onToggleButton, tg])
     //
     // useEffect(() => {
     //     // @ts-ignore
