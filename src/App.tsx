@@ -47,7 +47,7 @@ function App() {
         tg?.MainButton?.setParams({
             text: 'Отправить данные'
         })
-    }, [])
+    }, [tg?.MainButton])
 
     const handleSelectSubject = (e: SyntheticEvent<HTMLSelectElement>) => {
         e.preventDefault();
