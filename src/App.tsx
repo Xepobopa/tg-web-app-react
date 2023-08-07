@@ -5,9 +5,13 @@ import {Col, Container, Form, FormControl, FormGroup, FormLabel, FormSelect, Row
 
 function App() {
     const {tg, onToggleButton} = useTelegram();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [subject, setSubject] = useState<string>(null!);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [date, setDate] = useState<string>(null!);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [title, setTitle] = useState<string>(null!);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [images, setImages] = useState<FileList | null>(null);
 
     // const onSendData = useCallback(() => {
