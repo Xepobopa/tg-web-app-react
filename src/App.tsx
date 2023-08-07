@@ -29,24 +29,25 @@ function App() {
     }, [tg])
 
     useEffect(() => {
-        // eslint-disable-next-line
-        tg?.WebApp?.onEvent('mainButtonClicked', onSendData);
+        tg?.onEvent('mainButtonClicked', onSendData)
         return () => {
-            // eslint-disable-next-line
-            tg?.WebApp?.offEvent('mainButtonClicked', onSendData);
+            tg?.offEvent('mainButtonClicked', onSendData)
         }
-    }, [onSendData, tg?.WebApp])
+    }, [onSendData, tg])
 
     useEffect(() => {
-        console.log("test");
         if (images && date && title && subject) {
-            console.log("true");
             tg?.MainButton?.show();
         } else {
-            console.log("false");
             tg?.MainButton?.hide();
         }
     }, [subject, date, title, images, tg?.MainButton])
+
+    useEffect(() => {
+        tg?.MainButton?.setParams({
+            text: 'Отправить данные'
+        })
+    }, [])
 
     const handleSelectSubject = (e: SyntheticEvent<HTMLSelectElement>) => {
         e.preventDefault();
