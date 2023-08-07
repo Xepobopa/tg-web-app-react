@@ -26,7 +26,6 @@ function App() {
 
     useEffect(() => {
         tg.ready();
-        onToggleButton();
     }, [onToggleButton, tg])
 
     useEffect(() => {
