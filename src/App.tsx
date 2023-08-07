@@ -23,7 +23,7 @@ function App() {
                             </Form.Group>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row style={{'verticalAlign': 'bottom'}}>
                         <Col>
                             <FormGroup className={'col-md-6'} controlId={'subject'}>
                                 <FormLabel>Предмет</FormLabel>
@@ -36,11 +36,23 @@ function App() {
                         </Col>
                         <Col>
                             <FormGroup className={'col-md-6'} controlId={'date'}>
-                                <FormLabel>Дата, когда задание было задано</FormLabel>
+                                <FormLabel>Когда задали дз</FormLabel>
                                 <FormControl required name={'date'} type={'date'}
                                              max={new Date().toISOString().split("T")[0]}/>
                             </FormGroup>
                         </Col>
+                    </Row>
+                    <Row>
+                        <Form.Group controlId="markdown">
+                            <Form.Label>Название задания</Form.Label>
+                            <Form.Control required as="textarea" name="body" rows={2}/>
+                        </Form.Group>
+                    </Row>
+                    <Row>
+                        <Form.Group controlId="files">
+                            <Form.Label>Фото</Form.Label>
+                            <Form.Control required type={'file'} name="file" multiple/>
+                        </Form.Group>
                     </Row>
                 </Stack>
             </Form>
