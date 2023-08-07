@@ -1,4 +1,4 @@
-import React, {ChangeEvent, SyntheticEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, SyntheticEvent, useCallback, useEffect, useState} from 'react';
 import {useTelegram} from "./hooks/useTelegram";
 import 'bootstrap/dist/css/bootstrap.css';
 import {Col, Container, Form, FormControl, FormGroup, FormLabel, FormSelect, Row, Stack} from "react-bootstrap";
@@ -14,36 +14,36 @@ function App() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [images, setImages] = useState<FileList | null>(null);
 
-    // const onSendData = useCallback(() => {
-    //     const data = {
-    //         subject,
-    //         date,
-    //         title,
-    //         images
-    //     }
-    //     tg.sendData(JSON.stringify(data));
-    // }, [date, images, subject, tg, title]);
-    //
+    const onSendData = useCallback(() => {
+        const data = {
+            subject,
+            date,
+            title,
+            images
+        }
+        tg.sendData(JSON.stringify(data));
+    }, [date, images, subject, tg, title]);
+
     useEffect(() => {
         tg.ready();
         onToggleButton();
     }, [onToggleButton, tg])
-    //
-    // useEffect(() => {
-    //     // @ts-ignore
-    //     tg.WebApp.onEvent('mainButtonClicked', onSendData);
-    //     return () => {
-    //         // @ts-ignore
-    //         tg.WebApp.offEvent('mainButtonClicked', onSendData);
-    //     }
-    // }, [onSendData, tg.WebApp])
-    //
-    // useEffect(() => {
-    //     if (images && date && title && images)
-    //         onToggleButton();
-    //     else
-    //         onToggleButton();
-    // }, [subject, date, title, images, onToggleButton])
+
+    useEffect(() => {
+        // eslint-disable-next-line
+        tg.WebApp.onEvent('mainButtonClicked', onSendData);
+        return () => {
+            // eslint-disable-next-line
+            tg.WebApp.offEvent('mainButtonClicked', onSendData);
+        }
+    }, [onSendData, tg.WebApp])
+
+    useEffect(() => {
+        if (images && date && title && subject)
+            onToggleButton();
+        else
+            onToggleButton();
+    }, [subject, date, title, images, onToggleButton])
 
     const handleSelectSubject = (e: SyntheticEvent<HTMLSelectElement>) => {
         e.preventDefault();
@@ -68,7 +68,6 @@ function App() {
 
     return (
         <Container className={'my-4'}>
-            {/*<button onClick={onToggleButton}>Toggle</button>*/}
             <Form>
                 <Stack gap={3}>
                     <Row>
