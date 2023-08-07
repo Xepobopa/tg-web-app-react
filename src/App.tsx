@@ -19,7 +19,7 @@ function App() {
         return () => {
             tg.WebApp.offEvent('mainButtonClicked', onSendData);
         }
-    }, [])
+    }, [onSendData, tg.WebApp])
 
     useEffect(() => {
         if (images && date && title && images)
