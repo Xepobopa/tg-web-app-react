@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {Col, Container, Form, FormControl, FormGroup, FormLabel, FormSelect, Row, Stack} from "react-bootstrap";
 
 function App() {
-    const {tg, onToggleButton} = useTelegram();
+    const {tg} = useTelegram();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [subject, setSubject] = useState<string>('');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -26,7 +26,7 @@ function App() {
 
     useEffect(() => {
         tg.ready();
-    }, [onToggleButton, tg])
+    }, [tg])
 
     useEffect(() => {
         // eslint-disable-next-line
@@ -41,12 +41,12 @@ function App() {
         console.log("test");
         if (images && date && title && subject) {
             console.log("true");
-            onToggleButton();
+            tg.MainButton.show();
         } else {
             console.log("false");
-            onToggleButton();
+            tg.MainButton.hide();
         }
-    }, [subject, date, title, images, onToggleButton])
+    }, [subject, date, title, images])
 
     const handleSelectSubject = (e: SyntheticEvent<HTMLSelectElement>) => {
         e.preventDefault();
