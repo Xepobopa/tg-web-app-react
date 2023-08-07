@@ -31,12 +31,12 @@ function App() {
 
     useEffect(() => {
         // eslint-disable-next-line
-        tg.WebApp.onEvent('mainButtonClicked', onSendData);
+        tg?.WebApp?.onEvent('mainButtonClicked', onSendData);
         return () => {
             // eslint-disable-next-line
-            tg.WebApp.offEvent('mainButtonClicked', onSendData);
+            tg?.WebApp?.offEvent('mainButtonClicked', onSendData);
         }
-    }, [onSendData, tg.WebApp])
+    }, [onSendData, tg?.WebApp])
 
     useEffect(() => {
         if (images && date && title && subject)
