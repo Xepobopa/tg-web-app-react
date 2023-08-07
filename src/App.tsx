@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FormEvent, SyntheticEvent, useCallback, useEffect, useState} from 'react';
+import React, {ChangeEvent, SyntheticEvent, useCallback, useEffect, useState} from 'react';
 import {useTelegram} from "./hooks/useTelegram";
 import 'bootstrap/dist/css/bootstrap.css';
 import {Col, Container, Form, FormControl, FormGroup, FormLabel, FormSelect, Row, Stack} from "react-bootstrap";
@@ -29,13 +29,13 @@ function App() {
     }, [subject, date, title, images, onToggleButton])
 
     const onSendData = useCallback(() => {
-       const data = {
-           subject,
-           date,
-           title,
-           images
-       }
-       tg.sendData(JSON.stringify(data));
+        const data = {
+            subject,
+            date,
+            title,
+            images
+        }
+        tg.sendData(JSON.stringify(data));
     }, [date, images, subject, tg, title]);
 
     const handleSelectSubject = (e: SyntheticEvent<HTMLSelectElement>) => {
