@@ -6,11 +6,11 @@ import {Col, Container, Form, FormControl, FormGroup, FormLabel, FormSelect, Row
 function App() {
     const {tg, onToggleButton} = useTelegram();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [subject, setSubject] = useState<string>(null!);
+    const [subject, setSubject] = useState<string>('');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [date, setDate] = useState<string>(null!);
+    const [date, setDate] = useState<string>('');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [title, setTitle] = useState<string>(null!);
+    const [title, setTitle] = useState<string>('');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [images, setImages] = useState<FileList | null>(null);
 
@@ -38,10 +38,14 @@ function App() {
     }, [onSendData, tg?.WebApp])
 
     useEffect(() => {
-        if (images && date && title && subject)
+        console.log("test");
+        if (images && date && title && subject) {
+            console.log("true");
             onToggleButton();
-        else
+        } else {
+            console.log("false");
             onToggleButton();
+        }
     }, [subject, date, title, images, onToggleButton])
 
     const handleSelectSubject = (e: SyntheticEvent<HTMLSelectElement>) => {
@@ -56,12 +60,10 @@ function App() {
 
     const handleChangeFiles = async (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
-        console.log(e.target.files)
         setImages(e.target.files);
     }
 
     const handleChangeTitle = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        e.preventDefault();
         setTitle(e.currentTarget.value);
     }
 
