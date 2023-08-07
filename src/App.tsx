@@ -21,7 +21,6 @@ function App() {
             title,
             images
         }
-        console.log(JSON.stringify(data));
         tg.sendData(JSON.stringify(data));
     }, [date, images, subject, tg, title]);
 
