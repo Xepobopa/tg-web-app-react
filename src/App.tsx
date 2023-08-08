@@ -103,6 +103,12 @@ function App() {
                             <Form.Control required type={'file'} name="file" onChange={handleChangeFiles} multiple/>
                         </Form.Group>
                     </Row>
+                    <Row>
+                        <span>Выбранные файлы:</span>
+                        <ul style={{'listStyle': 'none'}}>
+                            {Array.from(images ? images : []).map(image => <li>{image.name}</li>)}
+                        </ul>
+                    </Row>
                 </Stack>
             </Form>
         </Container>
