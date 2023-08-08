@@ -5,13 +5,9 @@ import {Col, Container, Form, FormControl, FormGroup, FormLabel, FormSelect, Row
 
 function App() {
     const {tg} = useTelegram();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [subject, setSubject] = useState<string>('');
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [date, setDate] = useState<string>('');
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [title, setTitle] = useState<string>('');
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [images, setImages] = useState<FileList | null>(null);
 
     const onSendData = useCallback(() => {
@@ -19,7 +15,10 @@ function App() {
             subject,
             date,
             title,
-            images
+            files: Array.from(images ? images : []).map(async image => ({
+                name: image.name,
+                buffer: await image.arrayBuffer()
+            }))
         }
         tg.sendData(JSON.stringify(data));
     }, [date, images, subject, tg, title]);
