@@ -2,6 +2,7 @@ import React, {ChangeEvent, SyntheticEvent, useCallback, useEffect, useState} fr
 import {useTelegram} from "./hooks/useTelegram";
 import 'bootstrap/dist/css/bootstrap.css';
 import {Col, Container, Form, FormControl, FormGroup, FormLabel, FormSelect, Row, Stack} from "react-bootstrap";
+import axios from "axios";
 
 function App() {
     const {tg} = useTelegram();
@@ -15,13 +16,11 @@ function App() {
             subject,
             date,
             title,
-            files: Array.from(images ? images : []).map(async image => ({
-                name: image.name,
-                buffer: await image.arrayBuffer()
-            }))
+            images
         }
-        tg.sendData(JSON.stringify(data));
-    }, [date, images, subject, tg, title]);
+        //tg.sendData(JSON.stringify(data));
+        axios.post('https://localhost:5000', data, {headers: { 'Content-Type': 'multipart/form-data' }})
+    }, [date, images, subject, title]);
 
     useEffect(() => {
         tg.ready();
@@ -105,7 +104,7 @@ function App() {
                     <Row>
                         <span>Выбранные файлы:</span>
                         <ul style={{'listStyle': 'none'}}>
-                            {Array.from(images ? images : []).map(image => <li>{image.name}</li>)}
+                            {Array.from(images ? images : []).map(image => <li key={image.name}>{image.name}</li>)}
                         </ul>
                     </Row>
                 </Stack>
