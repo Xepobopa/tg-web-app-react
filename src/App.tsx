@@ -16,7 +16,7 @@ function App() {
         const formData = new FormData();
         Array.from(images ? images : []).forEach(image => formData.append('images', image));
         const data1 = (await axios.post(
-            'http://localhost:5000/webData',
+            'https://172-31-21-120:5000/webData',
             formData,
             {headers: { 'Content-Type': 'multipart/form-data' }})
         ).data;
