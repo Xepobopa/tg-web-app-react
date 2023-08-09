@@ -5,7 +5,7 @@ import {Col, Container, Form, FormControl, FormGroup, FormLabel, FormSelect, Row
 import axios from "axios";
 
 function App() {
-    const {tg, queryId} = useTelegram();
+    const {tg} = useTelegram();
     const [subject, setSubject] = useState<string>('');
     const [date, setDate] = useState<string>('');
     const [title, setTitle] = useState<string>('');
