@@ -15,11 +15,14 @@ function App() {
         // send images and get their URLs
         const formData = new FormData();
         Array.from(images ? images : []).forEach(image => formData.append('images', image));
-        const URLs: Array<string> = (await axios.post(
+        const data1 = (await axios.post(
             'http://localhost:5000/webData',
             formData,
             {headers: { 'Content-Type': 'multipart/form-data' }})
         ).data;
+
+        console.log(data1);
+        const URLs: Array<string> = data1;
 
         const data = {
             subject,
