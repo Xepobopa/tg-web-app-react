@@ -11,17 +11,24 @@ function App() {
     const [title, setTitle] = useState<string>('');
     const [images, setImages] = useState<FileList | null>(null);
 
-    const onSendData = useCallback(() => {
+    const onSendData = useCallback(async () => {
+        // send images and get their URLs
+        const formData = new FormData();
+        Array.from(images ? images : []).forEach(image => formData.append('images', image));
+        const URLs: Array<string> = (await axios.post(
+            'http://localhost:5000/webData',
+            formData,
+            {headers: { 'Content-Type': 'multipart/form-data' }})
+        ).data;
+
         const data = {
             subject,
             date,
             title,
-            images,
-            queryId,
+            URLs,
         }
-        //tg.sendData(JSON.stringify(data));
-        axios.post('https://localhost:5000/webData', data, {headers: { 'Content-Type': 'multipart/form-data' }})
-    }, [date, images, queryId, subject, title]);
+        tg.sendData(JSON.stringify(data));
+    }, [date, images, subject, tg, title]);
 
     useEffect(() => {
         tg.ready();
@@ -55,7 +62,7 @@ function App() {
 
     const handleSelectDate = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
-        setDate(e.currentTarget.value);
+        setDate(e.currentTarget.valueAsDate?.toISOString()!);
     }
 
     const handleChangeFiles = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -65,6 +72,10 @@ function App() {
 
     const handleChangeTitle = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setTitle(e.currentTarget.value);
+    }
+
+    const handleOnClick = async () => {
+
     }
 
     return (
@@ -110,6 +121,7 @@ function App() {
                     </Row>
                 </Stack>
             </Form>
+                <button onClick={handleOnClick}>Save images</button>
         </Container>
     );
 }
