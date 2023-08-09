@@ -20,8 +20,8 @@ function App() {
             queryId,
         }
         //tg.sendData(JSON.stringify(data));
-        axios.post('https://localhost:5000', data, {headers: { 'Content-Type': 'multipart/form-data' }})
-    }, [date, images, subject, title]);
+        axios.post('https://localhost:5000/webData', data, {headers: { 'Content-Type': 'multipart/form-data' }})
+    }, [date, images, queryId, subject, title]);
 
     useEffect(() => {
         tg.ready();
