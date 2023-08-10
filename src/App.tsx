@@ -2,7 +2,6 @@ import React, {ChangeEvent, SyntheticEvent, useCallback, useEffect, useState} fr
 import {useTelegram} from "./hooks/useTelegram";
 import 'bootstrap/dist/css/bootstrap.css';
 import {Col, Container, Form, FormControl, FormGroup, FormLabel, FormSelect, Row, Stack} from "react-bootstrap";
-import axios from "axios";
 
 function App() {
     const {tg} = useTelegram();
@@ -31,7 +30,7 @@ function App() {
             URLs,
         }
         tg.sendData(JSON.stringify(data));
-    }, [date, images, subject, tg, title]);
+    }, [date, subject, tg, title]);
 
     useEffect(() => {
         tg.ready();
@@ -124,7 +123,7 @@ function App() {
                     </Row>
                 </Stack>
             </Form>
-                <button onClick={handleOnClick}>Save images</button>
+            <button onClick={handleOnClick}>Save images</button>
         </Container>
     );
 }
