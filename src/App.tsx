@@ -2,6 +2,7 @@ import React, {ChangeEvent, SyntheticEvent, useCallback, useEffect, useState} fr
 import {useTelegram} from "./hooks/useTelegram";
 import 'bootstrap/dist/css/bootstrap.css';
 import {Col, Container, Form, FormControl, FormGroup, FormLabel, FormSelect, Row, Stack} from "react-bootstrap";
+import axios from "axios";
 
 function App() {
     const {tg} = useTelegram();
@@ -12,15 +13,15 @@ function App() {
 
     const onSendData = useCallback(async () => {
         // send images and get their URLs
-        // const formData = new FormData();
-        // Array.from(images ? images : []).forEach(image => formData.append('images', image));
-        // const data1 = (await axios.post(
-        //     'https://100.27.21.31:5000/webData',
-        //     formData,
-        //     {headers: { 'Content-Type': 'multipart/form-data' }})
-        // ).data;
-        //
-        // console.log(data1);
+        const formData = new FormData();
+        Array.from(images ? images : []).forEach(image => formData.append('images', image));
+        const data1 = (await axios.post(
+            'https://100.27.21.31:5000/webData',
+            formData,
+            {headers: { 'Content-Type': 'multipart/form-data' }})
+        ).data;
+
+        console.log(data1);
         const URLs: Array<string> = [""];
 
         const data = {
@@ -30,7 +31,7 @@ function App() {
             URLs,
         }
         tg.sendData(JSON.stringify(data));
-    }, [date, subject, tg, title]);
+    }, [date, images, subject, tg, title]);
 
     useEffect(() => {
         tg.ready();
