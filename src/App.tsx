@@ -13,16 +13,16 @@ function App() {
 
     const onSendData = useCallback(async () => {
         // send images and get their URLs
-        const formData = new FormData();
-        Array.from(images ? images : []).forEach(image => formData.append('images', image));
-        const data1 = (await axios.post(
-            'https://100.27.21.31:5000/webData',
-            formData,
-            {headers: { 'Content-Type': 'multipart/form-data' }})
-        ).data;
-
-        console.log(data1);
-        const URLs: Array<string> = data1;
+        // const formData = new FormData();
+        // Array.from(images ? images : []).forEach(image => formData.append('images', image));
+        // const data1 = (await axios.post(
+        //     'https://100.27.21.31:5000/webData',
+        //     formData,
+        //     {headers: { 'Content-Type': 'multipart/form-data' }})
+        // ).data;
+        //
+        // console.log(data1);
+        const URLs: Array<string> = [""];
 
         const data = {
             subject,
