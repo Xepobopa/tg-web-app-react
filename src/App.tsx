@@ -6,13 +6,25 @@ import axios from "axios";
 
 function App() {
     const {tg} = useTelegram();
-    const [URLs, setURLs] = useState<Array<string>>([""]);
+    const [subject, setSubject] = useState<string>('');
     const [date, setDate] = useState<string>('');
     const [title, setTitle] = useState<string>('');
-    const [subject, setSubject] = useState<string>('');
     const [images, setImages] = useState<FileList | null>(null);
 
     const onSendData = useCallback(async () => {
+        // send images and get their URLs
+        const formData = new FormData();
+        Array.from(images ? images : []).forEach(image => formData.append('images', image));
+        //'https://100.27.21.31:5000/webData',
+        const res = (await axios.post(
+            'http://localhost:5000/webData',
+            formData,
+            {headers: { 'Content-Type': 'multipart/form-data' }})
+        );
+
+        console.log(res.data);
+        const URLs: Array<string> = res.data;
+
         const data = {
             subject,
             date,
@@ -20,7 +32,7 @@ function App() {
             URLs,
         }
         tg.sendData(JSON.stringify(data));
-    }, [URLs, date, subject, tg, title]);
+    }, [date, images, subject, tg, title]);
 
     useEffect(() => {
         tg.ready();
@@ -67,16 +79,7 @@ function App() {
     }
 
     const handleOnClick = async () => {
-        // send images and get their URLs
-        const formData = new FormData();
-        Array.from(images ? images : []).forEach(image => formData.append('images', image));
-        //'https://100.27.21.31:5000/webData',
-        const res = (await axios.post(
-                'https://localhost:5000/webData',
-                formData,
-                {headers: {'Content-Type': 'multipart/form-data'}})
-        );
-        setURLs(res.data);
+
     }
 
     return (
