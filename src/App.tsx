@@ -78,7 +78,14 @@ function App() {
     }
 
     const handleOnClick = async () => {
-
+        const formData = new FormData();
+        Array.from(images ? images : []).forEach(image => formData.append('images', image));
+        axios.post(
+                'http://100.27.21.31:5000/webData',
+                formData,
+                {headers: { 'Content-Type': 'multipart/form-data' }})
+            .then(value => console.log(value))
+            .catch(reason => console.log(reason));
     }
 
     return (
