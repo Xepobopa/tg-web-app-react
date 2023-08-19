@@ -31,6 +31,7 @@ const GetHomework = () => {
     const notify = (notifyText: string, type: TypeOptions) => toast(notifyText, {type: type});
 
     const getHomeworkFromDb = async (title: string, date: Date, subject: Subject) => {
+        setSelectedHW(0);
         return (await axios.get('https://localhost:5000/get', {
             params: {
                 title,
@@ -85,7 +86,7 @@ const GetHomework = () => {
 
     const handleSearch = async () => {
         if (subject && (date || title)) {
-            await getHomeworkFromDb(subject, new Date(date), title as Subject);
+            setHWList(await getHomeworkFromDb(subject, new Date(date), title as Subject));
         } else {
             notify("Введите данные для поиска!", "error")
         }
