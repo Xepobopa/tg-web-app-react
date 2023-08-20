@@ -2,6 +2,7 @@ import React, {ChangeEvent, SyntheticEvent, useCallback, useEffect, useState} fr
 import {useTelegram} from "../hooks/useTelegram";
 import axios from "axios";
 import {Col, Form, FormControl, FormGroup, FormLabel, FormSelect, Row, Stack} from "react-bootstrap";
+import {Homework} from "../type/homework";
 
 const AddHomework = () => {
     const {tg} = useTelegram();
@@ -13,21 +14,23 @@ const AddHomework = () => {
     const onSendData = useCallback(async () => {
         // send images and get their URLs
         const formData = new FormData();
+        formData.append('title', title);
+        formData.append('subject', subject);
+        formData.append('date', date);
         Array.from(images ? images : []).forEach(image => formData.append('images', image));
-        const res = (await axios.post(
+        const res = (await axios.post<Homework>(
                 'http://localhost:5000/webData',
                 formData,
                 {headers: { 'Content-Type': 'multipart/form-data' }})
-        );
+        ).data;
 
-        console.log(res.data);
-        const URLs: Array<string> = res.data;
+        console.log(res);
 
         const data = {
             subject,
             date,
             title,
-            URLs,
+            URLs: res.files,
         }
         tg.sendData(JSON.stringify(data));
     }, [date, images, subject, tg, title]);
