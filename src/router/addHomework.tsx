@@ -26,13 +26,7 @@ const AddHomework = () => {
 
         console.log(res);
 
-        const data = {
-            subject,
-            date,
-            title,
-            URLs: res.files,
-        }
-        tg.sendData(JSON.stringify(data));
+        tg.sendData(JSON.stringify(res));
     }, [date, images, subject, tg, title]);
 
     useEffect(() => {
