@@ -52,9 +52,9 @@ const GetHomework = () => {
         tg.ready();
     }, [tg])
 
-    const onSendData = useCallback(async () => {
-
-    }, []);
+    const onSendData = useCallback(() => {
+        tg.sendData("test string");
+    }, [selectedHW, tg]);
 
     useEffect(() => {
         tg?.onEvent('mainButtonClicked', onSendData)
