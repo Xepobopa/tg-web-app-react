@@ -38,9 +38,9 @@ const GetHomework = () => {
         })
         const res = (await axios.get('http://localhost:5000/get', {
             params: {
-                title,
+                title: title && null,
                 subject,
-                date
+                date: date && null
             }
         })).data;
         console.log("res");
