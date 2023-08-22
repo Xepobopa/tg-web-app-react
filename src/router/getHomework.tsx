@@ -23,22 +23,29 @@ import {Subject} from "../type/enum/subject";
 
 const GetHomework = () => {
     const {tg} = useTelegram();
-    const [date, setDate] = useState<string>('');
-    const [title, setTitle] = useState<string>('');
-    const [HWList, setHWList] = useState<Array<Homework>>(null!);
-    const [selectedHW, setSelectedHW] = useState<number>(0);
+    const [date, setDate] = useState<Date | null>(null);
+    const [title, setTitle] = useState<string | null>(null);
     const [subject, setSubject] = useState<string>('');
+    const [selectedHW, setSelectedHW] = useState<Homework | undefined>(undefined);
+    const [HWList, setHWList] = useState<Array<Homework>>(null!);
     const notify = (notifyText: string, type: TypeOptions) => toast(notifyText, {type: type});
 
-    const getHomeworkFromDb = async (title: string, date: Date, subject: Subject) => {
-        setSelectedHW(0);
-        return (await axios.get('https://localhost:5000/get', {
+    const getHomeworkFromDb = async (title: string | null, date: Date | null, subject: Subject) => {
+        console.log({
+            title,
+            subject,
+            date
+        })
+        const res = (await axios.get('http://localhost:5000/get', {
             params: {
                 title,
                 subject,
                 date
             }
         })).data;
+        console.log("res");
+        console.log(res);
+        return res;
     }
 
     useEffect(() => {
@@ -77,7 +84,7 @@ const GetHomework = () => {
 
     const handleSelectDate = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
-        setDate(e.currentTarget.valueAsDate?.toISOString()!);
+        setDate(e.currentTarget?.valueAsDate);
     }
 
     const handleChangeTitle = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -85,11 +92,17 @@ const GetHomework = () => {
     }
 
     const handleSearch = async () => {
-        if (subject && (date || title)) {
-            setHWList(await getHomeworkFromDb(subject, new Date(date), title as Subject));
+        if ((subject && subject !== '-') || date || title) {
+            const hwFromDb = await getHomeworkFromDb(title, date, subject as Subject)
+            setHWList(hwFromDb);
         } else {
             notify("Введите данные для поиска!", "error")
         }
+    }
+
+    const handleListItem = (hwId: number) => {
+        console.log(hwId)
+        setSelectedHW(HWList.find(value => value.id === hwId))
     }
 
     return (
@@ -128,7 +141,7 @@ const GetHomework = () => {
             <Container>
                 <ListGroup>
                     {HWList?.map(value =>
-                        <ListGroupItem action onClick={e => console.log(e.currentTarget.className)} key={value.id}>
+                        <ListGroupItem action onClick={() => handleListItem(value.id)} key={value.id}>
                             <HomeworkElement hw={value}/>
                         </ListGroupItem>
                     )}
