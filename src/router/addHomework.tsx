@@ -4,7 +4,6 @@ import axios from "axios";
 import {Col, Form, FormControl, FormGroup, FormLabel, FormSelect, Row, Stack} from "react-bootstrap";
 import {Homework} from "../type/homework";
 import {ConfigService} from "../config/configService";
-import {randomUUID} from "crypto";
 
 const AddHomework = () => {
     const {tg} = useTelegram();
