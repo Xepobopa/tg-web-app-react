@@ -3,9 +3,11 @@ import {useTelegram} from "../hooks/useTelegram";
 import axios from "axios";
 import {Col, Form, FormControl, FormGroup, FormLabel, FormSelect, Row, Stack} from "react-bootstrap";
 import {Homework} from "../type/homework";
+import {ConfigService} from "../config/configService";
 
 const AddHomework = () => {
     const {tg} = useTelegram();
+    const [subjects, setSubjects] = useState<string[]>(['-']);
     const [subject, setSubject] = useState<string>('');
     const [date, setDate] = useState<string>('');
     const [title, setTitle] = useState<string>('');
@@ -21,7 +23,7 @@ const AddHomework = () => {
         const res = (await axios.post<Homework>(
                 'http://localhost:5000/webData',
                 formData,
-                {headers: { 'Content-Type': 'multipart/form-data' }})
+                {headers: {'Content-Type': 'multipart/form-data'}})
         ).data;
 
         console.log(res);
@@ -30,6 +32,9 @@ const AddHomework = () => {
     }, [date, images, subject, tg, title]);
 
     useEffect(() => {
+        const a = new ConfigService();
+        console.log(a.dtkddtu_2course.push('-'))
+        setSubjects(a.dtkddtu_2course);
         tg.ready();
     }, [tg])
 
@@ -79,7 +84,7 @@ const AddHomework = () => {
         axios.post(
             'http://100.27.21.31:5000/webData',
             formData,
-            {headers: { 'Content-Type': 'multipart/form-data' }})
+            {headers: {'Content-Type': 'multipart/form-data'}})
             .then(value => console.log(value))
             .catch(reason => console.log(reason));
     }
@@ -93,9 +98,7 @@ const AddHomework = () => {
                             <FormGroup className={'col-md-6'} controlId={'subject'}>
                                 <FormLabel>Предмет</FormLabel>
                                 <FormSelect onChange={handleSelectSubject}>
-                                    <option>-</option>
-                                    <option>Математика</option>
-                                    <option>Укр Мова</option>
+                                    {subjects.map(value => <option>{value}</option>)}
                                 </FormSelect>
                             </FormGroup>
                         </Col>
