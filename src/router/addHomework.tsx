@@ -4,6 +4,7 @@ import axios from "axios";
 import {Col, Form, FormControl, FormGroup, FormLabel, FormSelect, Row, Stack} from "react-bootstrap";
 import {Homework} from "../type/homework";
 import {ConfigService} from "../config/configService";
+import {randomUUID} from "crypto";
 
 const AddHomework = () => {
     const {tg} = useTelegram();
@@ -80,9 +81,12 @@ const AddHomework = () => {
 
     const handleOnClick = async () => {
         const formData = new FormData();
+        formData.append('title', title);
+        formData.append('subject', subject);
+        formData.append('date', date);
         Array.from(images ? images : []).forEach(image => formData.append('images', image));
         axios.post(
-            'http://100.27.21.31:5000/webData',
+            'http://localhost:5000/webData',
             formData,
             {headers: {'Content-Type': 'multipart/form-data'}})
             .then(value => console.log(value))
@@ -98,7 +102,7 @@ const AddHomework = () => {
                             <FormGroup className={'col-md-6'} controlId={'subject'}>
                                 <FormLabel>Предмет</FormLabel>
                                 <FormSelect onChange={handleSelectSubject}>
-                                    {subjects.map(value => <option>{value}</option>)}
+                                    {subjects.map(value => <option key={value}>{value}</option>)}
                                 </FormSelect>
                             </FormGroup>
                         </Col>
